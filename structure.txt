@@ -1,0 +1,9 @@
+1.SetUp & Routing
+------------
+2.Creating layout
+------------------
+3.Adding data to layout
+---------------
+4.Adding API requests
+----------------
+5. Setting up search bar
