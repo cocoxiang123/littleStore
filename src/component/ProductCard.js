@@ -2,15 +2,16 @@ import React from 'react'
 import { Grid, Card, CardContent, Typography, CardActionArea, CardMedia } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom'
 
 const withStyles = makeStyles(theme => ({
     root: {
         textAlign: 'center',
         marginTop: theme.spacing(3),
-        padding: theme.spacing(3),
-        margin: 40,
+        /*    padding: theme.spacing(4), */
+        margin: 50,
         maxWidth: 280,
-        height: 450
+        maxHeight: 450
     },
     container: {
 
@@ -34,19 +35,23 @@ const withStyles = makeStyles(theme => ({
     title: {
         height: 50,
         overflow: 'hidden'
+    },
+    link: {
+        textDecoration: 'none'
     }
 }))
 
 function ProductCard(props) {
 
     const classes = withStyles();
-    const { image: img, title, price } = props;
+    const { image: img, title, price, id } = props;
 
     return (
 
-        <Grid item xs={12} sm={6} md={4} >
+        <Grid item sm={12} md={6} lg={4} className={classes.root}>
 
-            <Card className={classes.root} >
+            <Card  >
+
                 <CardActionArea className={classes.container}>
                     <CardContent className={classes.content}>
 
@@ -59,7 +64,11 @@ function ProductCard(props) {
                     </CardContent>
                 </CardActionArea>
 
-                <Button className={classes.button} variant="contained" size="medium" color="primary">Detail</Button>
+                <Link to={`/${id}`} className={classes.link}>
+                    <Button className={classes.button} variant="contained" size="medium" color="primary">Detail</Button>
+
+                </Link>
+
                 <Button className={classes.button} variant="contained" size="medium" color="primary">Buy</Button>
             </Card>
 

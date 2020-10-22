@@ -1,17 +1,19 @@
 import React from 'react'
-import { Grid, makeStyles } from '@material-ui/core'
+import { Grid, makeStyles, CircularProgress } from '@material-ui/core'
 import ProductCard from './ProductCard'
-import { productDetails } from '../mockData'
+
 
 const withStyles = makeStyles({
     root: {
 
-        justifyContent: 'space-around',
+        justifyContent: 'center',
         alignContent: 'center',
     }
 })
 
-function StoreList() {
+
+function StoreList(props) {
+    const { products } = props;
 
     const classes = withStyles();
     const createCard = (product) => {
@@ -22,9 +24,12 @@ function StoreList() {
 
     return (
         <Grid container spacing={5} className={classes.root}>
-            {productDetails.map((product) => {
-                return createCard(product)
-            })}
+            {products ?
+                products.map((product) => {
+                    return createCard(product)
+                })
+                : <CircularProgress />
+            }
         </Grid>
     )
 }

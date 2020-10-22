@@ -1,7 +1,7 @@
 import React from 'react'
 import { makeStyles, AppBar, Toolbar, Typography, Button, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-
+import { Link } from 'react-router-dom'
 
 function Nav() {
     const useStyles = makeStyles((theme) => ({
@@ -14,6 +14,10 @@ function Nav() {
         title: {
             flexGrow: 1,
         },
+        link: {
+            textDecoration: 'none',
+            color: "#fff"
+        }
     }));
     const classes = useStyles();
     return (
@@ -25,8 +29,8 @@ function Nav() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" className={classes.title}>
-                        Little Store
-          </Typography>
+                        <Link to="/" className={classes.link}>Little Store</Link>
+                    </Typography>
                     <Button color="inherit">SearchBar</Button>
                 </Toolbar>
             </AppBar>
