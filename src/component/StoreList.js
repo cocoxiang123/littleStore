@@ -6,8 +6,9 @@ import ProductCard from './ProductCard'
 const withStyles = makeStyles({
     root: {
 
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignContent: 'center',
+        marginLeft: 50
     }
 })
 

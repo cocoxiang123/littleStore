@@ -8,13 +8,12 @@ const withStyles = makeStyles(theme => ({
     root: {
         textAlign: 'center',
         marginTop: theme.spacing(3),
-        /*    padding: theme.spacing(4), */
         margin: 50,
-        maxWidth: 280,
-        maxHeight: 450
+        maxWidth: 300,
+        maxHeight: 430
     },
     container: {
-
+        marginBottom: 5
 
     },
     content: {
@@ -23,18 +22,24 @@ const withStyles = makeStyles(theme => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        alignContent: 'space-between'
+        alignContent: 'center'
     },
     media: {
-        maxHeight: '80%',
-        maxWidth: '100%'
+        maxwidth: '100%',
+        width: 210,
+        maxHeight: 300,
+        height: 'auto'
     },
     button: {
         margin: 10
     },
     title: {
-        height: 50,
-        overflow: 'hidden'
+        maxHeight: 55,
+        overflow: 'hidden',
+        color: "black",
+    },
+    price: {
+        fontSize: '1.1rem',
     },
     link: {
         textDecoration: 'none'
@@ -42,7 +47,6 @@ const withStyles = makeStyles(theme => ({
 }))
 
 function ProductCard(props) {
-
     const classes = withStyles();
     const { image: img, title, price, id } = props;
 
@@ -53,15 +57,18 @@ function ProductCard(props) {
             <Card  >
 
                 <CardActionArea className={classes.container}>
-                    <CardContent className={classes.content}>
+                    <Link to={`/${id}`} className={classes.link}>
+                        <CardContent className={classes.content}>
 
-                        <CardMedia component="img" className={classes.media} image={img} title={title} alt={title} />
-                        <Typography className={classes.title} variant="subtitle1">{title}</Typography>
-                        <Typography variant="body2" color="textSecondary" component="p" className={classes.description}>
-                            {`$${price}`}
-                        </Typography>
+                            <CardMedia component="img" className={classes.media} image={img} title={title} alt={title} />
 
-                    </CardContent>
+                            <Typography className={classes.title} variant="subtitle1">{title}</Typography>
+                            <Typography variant="body2" color="textSecondary" component="p" className={classes.price}>
+                                {`$${price}`}
+                            </Typography>
+
+                        </CardContent>
+                    </Link>
                 </CardActionArea>
 
                 <Link to={`/${id}`} className={classes.link}>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
+import './app.scss';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Main from './pages/main'
 import Product from './pages/Product'
@@ -16,13 +16,13 @@ function App() {
     getData();
   }, [])
 
-  console.log(products)
+
   return (
     <div className="App">
       <BrowserRouter>
         <Switch>
           <Route path="/" exact><Main products={products} /></Route>
-          <Route path="/:id" exact ><Product products={products} /></Route>
+          <Route path="/:id" exact render={(props) => <Product products={products} />}></Route>
         </Switch>
       </BrowserRouter>
 

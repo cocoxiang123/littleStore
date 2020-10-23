@@ -1,9 +1,21 @@
-1.SetUp & Routing
+Main & Product:
+1.SetUp file Structure & Routing
+*React-router-dom
 ------------
 2.Creating layout
+*Material UI
 ------------------
 3.Adding data to layout
+* UseContext store and passing data
 ---------------
 4.Adding API requests
+*Axios
 ----------------
 5. Setting up search bar
+*Jquery autoComplete
+
+Pages:
+Main 
+product
+Cart
+Payment
