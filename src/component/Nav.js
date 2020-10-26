@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
-import { fade, makeStyles, AppBar, Toolbar, Button, IconButton, InputBase, Typography } from '@material-ui/core';
+import React, { useContext } from 'react'
+import { fade, makeStyles, AppBar, Toolbar, IconButton, InputBase, Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link } from 'react-router-dom'
+import { ProductContext } from '../context'
 
 function Nav() {
     const useStyles = makeStyles((theme) => ({
@@ -60,8 +61,8 @@ function Nav() {
         },
     }));
     const classes = useStyles();
-    const [input, setInput] = useState("")
-    console.log(input)
+    const store = useContext(ProductContext);
+    const { onChangeSearch, search, onKeyUpChange } = store;
     return (
 
         <div className={classes.root}>
@@ -84,9 +85,11 @@ function Nav() {
                                 root: classes.inputRoot,
                                 input: classes.inputInput,
                             }}
-                            inputProps={{ 'aria-label': 'search' }}
-                            value={input}
-                            onChange={e => setInput(e.target.value)}
+                            inputProps={{ 'aria-label': 'search', 'type': "text", maxLength: 25 }}
+                            value={search}
+                            onChange={e => onChangeSearch(e.target.value)}
+                            onKeyUp={e => onKeyUpChange(e)}
+
                         />
                     </div>
                 </Toolbar>

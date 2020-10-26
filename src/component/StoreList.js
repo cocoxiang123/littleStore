@@ -1,20 +1,34 @@
-import React from 'react'
-import { Grid, makeStyles, CircularProgress } from '@material-ui/core'
+import React, { useContext } from 'react'
+import { Grid, makeStyles, CircularProgress, Typography } from '@material-ui/core'
 import ProductCard from './ProductCard'
+import { ProductContext } from '../context'
+
 
 
 const withStyles = makeStyles({
     root: {
-
-        justifyContent: 'flex-start',
+        width: '100%',
+        minHeight: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
         alignContent: 'center',
-        marginLeft: 50
-    }
+        margin: 'auto',
+
+    },
+    noMatch: {
+        marginTop: -100
+    },
+
 })
 
 
 function StoreList(props) {
-    const { products } = props;
+    const store = useContext(ProductContext);
+    const { filteredProducts, search } = store;
+    let { products } = props;
+    if (filteredProducts()) {
+        products = [...filteredProducts()]
+    }
 
     const classes = withStyles();
     const createCard = (product) => {
@@ -22,14 +36,28 @@ function StoreList(props) {
             <ProductCard {...product} key={product.id} />
         )
     }
+    const noMatchSearch = () => {
+        return (
+            <Grid className={classes.noMatch}>
+                <Typography variant="h5">We don’t have anything that matches '{search}'</Typography>
+                <Typography variant="body2" color="textSecondary" className={classes.hint}> Check your spelling and try again or use a more general search term.</Typography>
+            </Grid>
+        )
+    }
 
     return (
         <Grid container spacing={5} className={classes.root}>
-            {products ?
+            {products.length > 0 ? (
                 products.map((product) => {
                     return createCard(product)
                 })
-                : <CircularProgress />
+            )
+                :
+                (search.trim().length > 0 ?
+                    (
+                        noMatchSearch()
+                    ) :
+                    <CircularProgress />)
             }
         </Grid>
     )

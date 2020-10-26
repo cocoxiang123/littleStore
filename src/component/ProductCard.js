@@ -27,8 +27,8 @@ const withStyles = makeStyles(theme => ({
     media: {
         maxwidth: '100%',
         width: 210,
-        maxHeight: 300,
-        height: 'auto'
+        height: 'auto',
+        maxHeight: 300
     },
     button: {
         margin: 10
@@ -50,6 +50,7 @@ function ProductCard(props) {
     const classes = withStyles();
     const { image: img, title, price, id } = props;
 
+
     return (
 
         <Grid item sm={12} md={6} lg={4} className={classes.root}>
@@ -59,9 +60,9 @@ function ProductCard(props) {
                 <CardActionArea className={classes.container}>
                     <Link to={`/${id}`} className={classes.link}>
                         <CardContent className={classes.content}>
-
-                            <CardMedia component="img" className={classes.media} image={img} title={title} alt={title} />
-
+                            <div className="img_container">
+                                <CardMedia component="img" className={classes.media} image={img} title={title} alt={title} />
+                            </div>
                             <Typography className={classes.title} variant="subtitle1">{title}</Typography>
                             <Typography variant="body2" color="textSecondary" component="p" className={classes.price}>
                                 {`$${price}`}

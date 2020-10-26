@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './app.scss';
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import Main from './pages/main'
-import Product from './pages/Product'
+import Product from './pages/Product/Product'
+import NoMatch from './pages/NoMatch'
 import { FetchProduct } from './api/index'
+
 
 function App() {
 
@@ -19,12 +21,15 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
-        <Switch>
-          <Route path="/" exact><Main products={products} /></Route>
-          <Route path="/:id" exact render={(props) => <Product products={products} />}></Route>
-        </Switch>
-      </BrowserRouter>
+
+      <Switch>
+        <Route path="/" exact><Main products={products} /></Route>
+        <Route path="/:id" exact render={(props) => <Product products={products} />}></Route>
+        <Route path="*">
+          <NoMatch />
+        </Route>
+      </Switch>
+
 
     </div>
   );
