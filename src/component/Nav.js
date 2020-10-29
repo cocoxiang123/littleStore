@@ -1,9 +1,11 @@
-import React, { useContext } from 'react'
-import { fade, makeStyles, AppBar, Toolbar, IconButton, InputBase, Typography } from '@material-ui/core';
+import React, { useContext, useState } from 'react'
+import { fade, makeStyles, AppBar, Toolbar, IconButton, InputBase, Typography, Drawer, Divider, List } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import MenuIcon from '@material-ui/icons/Menu';
+import HomeIcon from '@material-ui/icons/Home';
 import { Link } from 'react-router-dom'
 import { ProductContext } from '../context'
+import ListItemLink from './ListItemLink'
 
 function Nav() {
     const useStyles = makeStyles((theme) => ({
@@ -59,16 +61,26 @@ function Nav() {
                 width: '20ch',
             },
         },
+        paper: {
+            backgroundColor: '#3f51b5',
+            color: "#fff"
+        },
+        list: {
+            width: 250,
+
+        }
     }));
     const classes = useStyles();
     const store = useContext(ProductContext);
     const { onChangeSearch, search, onKeyUpChange } = store;
+    const [showSideNav, setShowSideNav] = useState(false)
     return (
 
         <div className={classes.root}>
             <AppBar position="static">
+
                 <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                    <IconButton onClick={() => setShowSideNav(!showSideNav)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h5" className={classes.title}>
@@ -94,6 +106,16 @@ function Nav() {
                     </div>
                 </Toolbar>
             </AppBar>
+            <Drawer anchor="left" open={showSideNav} onClose={() => setShowSideNav(!showSideNav)} classes={{ paper: classes.paper }}>
+                <List className={classes.list} aria-label="Index">
+
+
+                    <ListItemLink to="/" primary="Home" icon={<HomeIcon style={{ color: 'white' }} />} />
+                    <Divider />
+
+
+                </List>
+            </Drawer>
         </div >
     )
 }

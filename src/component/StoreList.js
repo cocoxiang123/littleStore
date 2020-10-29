@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { Grid, makeStyles, CircularProgress, Typography } from '@material-ui/core'
 import ProductCard from './ProductCard'
 import { ProductContext } from '../context'
+import SortForm from './SortForm'
 
 
 
@@ -9,6 +10,11 @@ const withStyles = makeStyles({
     root: {
         width: '100%',
         minHeight: '100vh',
+
+
+    },
+    container: {
+
         display: 'flex',
         justifyContent: 'center',
         alignContent: 'center',
@@ -46,19 +52,23 @@ function StoreList(props) {
     }
 
     return (
-        <Grid container spacing={5} className={classes.root}>
-            {products.length > 0 ? (
-                products.map((product) => {
-                    return createCard(product)
-                })
-            )
-                :
-                (search.trim().length > 0 ?
-                    (
-                        noMatchSearch()
-                    ) :
-                    <CircularProgress />)
-            }
+        <Grid className={classes.root}>
+            <SortForm />
+            <Grid container spacing={5} className={classes.container}>
+
+                {products.length > 0 ? (
+                    products.map((product) => {
+                        return createCard(product)
+                    })
+                )
+                    :
+                    (search.trim().length > 0 ?
+                        (
+                            noMatchSearch()
+                        ) :
+                        <CircularProgress />)
+                }
+            </Grid>
         </Grid>
     )
 }

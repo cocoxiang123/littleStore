@@ -8,14 +8,14 @@ import { BrowserRouter } from 'react-router-dom'
 
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <ProductProvider >
-        <App />
-      </ProductProvider>
-    </BrowserRouter>
 
-  </React.StrictMode>,
+  <BrowserRouter>
+    <ProductProvider >
+      <App />
+    </ProductProvider>
+  </BrowserRouter>
+
+  ,
   document.getElementById('root')
 );
 

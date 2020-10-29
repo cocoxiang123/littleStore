@@ -4,7 +4,7 @@ import Nav from '../../component/Nav'
 import NoMatch from '../NoMatch'
 import './product.css'
 import { useParams } from 'react-router-dom'
-import { Typography, CardMedia, CircularProgress, Button, Grid } from '@material-ui/core'
+import { Typography, Button, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom'
 
@@ -15,7 +15,8 @@ const withStyles = makeStyles({
         display: 'flex',
         justifyContent: 'center',
         alignContent: 'center',
-        minHeight: '100vh'
+        minHeight: '100vh',
+        padding: '0.8rem'
     },
     root: {
         width: 450,
@@ -73,7 +74,6 @@ function Product(props) {
             productImg.style.transformOrigin = "center center";
             productImg.style.transform = "scale(1)";
         }
-
     }
     return (
         <>
@@ -87,7 +87,7 @@ function Product(props) {
                         <div className="img_container" id="img_container" onMouseMove={onImgMouseMove} onMouseLeave={onImgMouseLeave}>
                             <img
 
-                                alt="Product image"
+                                alt="Product"
                                 src={productDetail[0].image}
                                 title={productDetail[0].title}
                                 className="product_img"
