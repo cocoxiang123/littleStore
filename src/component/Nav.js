@@ -72,7 +72,7 @@ function Nav() {
     }));
     const classes = useStyles();
     const store = useContext(ProductContext);
-    const { onChangeSearch, search, onKeyUpChange } = store;
+    const { onChangeSearch, search, onKeyUpChange, onClearSearch } = store;
     const [showSideNav, setShowSideNav] = useState(false)
     return (
 
@@ -84,7 +84,7 @@ function Nav() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h5" className={classes.title}>
-                        <Link to="/" className={classes.link}>
+                        <Link to="/" className={classes.link} onClick={onClearSearch}>
                             Little Store</Link>
                     </Typography>
                     <div className={classes.search}>

@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, FormControl, Select } from '@material-ui/core'
+import { ProductContext } from '../context'
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -17,14 +18,13 @@ const useStyles = makeStyles((theme) => ({
 
 function SortForm() {
     const classes = useStyles();
-    const [sort, setSort] = useState('relevance')
-    const handleChange = e => {
-        setSort(e.target.value)
-    }
+    const store = useContext(ProductContext);
+    const { sort, handleSortChange } = store;
+
     return (
         <FormControl className={classes.formControl}>
             <Typography color="textSecondary">Sort By</Typography>
-            <Select native onChange={handleChange} value={sort}
+            <Select native onChange={handleSortChange} value={sort}
             >
 
                 <option value="relevance">Relevance</option>

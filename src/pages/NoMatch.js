@@ -11,8 +11,6 @@ const withStyles = makeStyles({
 function NoMatch() {
     const classes = withStyles();
     return (
-
-
         <Grid className={classes.noMatch}>
             <Typography variant="h5">We don’t have anything that matches </Typography>
 

@@ -22,20 +22,21 @@ const withStyles = makeStyles({
 
     },
     noMatch: {
-        marginTop: -100
+        marginTop: 100
     },
 
 })
 
 
-function StoreList(props) {
+function StoreList() {
     const store = useContext(ProductContext);
     const { filteredProducts, search } = store;
-    let { products } = props;
+    let { products } = store;
+
     if (filteredProducts()) {
         products = [...filteredProducts()]
     }
-
+    console.log(products)
     const classes = withStyles();
     const createCard = (product) => {
         return (

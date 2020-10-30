@@ -2,12 +2,12 @@ import React from 'react'
 import Nav from '../component/Nav'
 import StoreList from '../component/StoreList'
 
-function main(props) {
+function main() {
     return (
         <div>
             <Nav />
 
-            <StoreList {...props} />
+            <StoreList />
         </div>
     )
 }

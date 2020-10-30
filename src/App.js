@@ -23,7 +23,7 @@ function App() {
     <div className="App">
 
       <Switch>
-        <Route path="/" exact><Main products={products} /></Route>
+        <Route path="/" exact><Main /></Route>
         <Route path="/:id" exact render={(props) => <Product products={products} />}></Route>
         <Route path="*">
           <NoMatch />
