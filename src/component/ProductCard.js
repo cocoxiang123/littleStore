@@ -58,7 +58,7 @@ function ProductCard(props) {
             <Card  >
 
                 <CardActionArea className={classes.container}>
-                    <Link to={`/${id}`} className={classes.link}>
+                    <Link to={`product/${id}`} className={classes.link}>
                         <CardContent className={classes.content}>
                             <div className="img_container">
                                 <CardMedia component="img" className={classes.media} image={img} title={title} alt={title} />
@@ -72,7 +72,7 @@ function ProductCard(props) {
                     </Link>
                 </CardActionArea>
 
-                <Link to={`/${id}`} className={classes.link}>
+                <Link to={`/product/${id}`} className={classes.link}>
                     <Button className={classes.button} variant="contained" size="medium" color="primary">Detail</Button>
 
                 </Link>

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { ProductContext } from '../../context'
-import Nav from '../../component/Nav'
+
 import NoMatch from '../NoMatch'
 import './product.css'
 import { useParams } from 'react-router-dom'
@@ -77,7 +77,7 @@ function Product(props) {
     }
     return (
         <>
-            <Nav />
+
             <Grid className={classes.container}>
                 {productDetail.length > 0 ?
 

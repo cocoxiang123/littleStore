@@ -3,6 +3,7 @@ import { fade, makeStyles, AppBar, Toolbar, IconButton, InputBase, Typography, D
 import SearchIcon from '@material-ui/icons/Search';
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { Link } from 'react-router-dom'
 import { ProductContext } from '../context'
 import ListItemLink from './ListItemLink'
@@ -104,6 +105,13 @@ function Nav() {
 
                         />
                     </div>
+                    <Link to="/cart" style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <IconButton color="inherit" aria-label="cart">
+
+                            <ShoppingCartIcon />
+
+                        </IconButton>
+                    </Link>
                 </Toolbar>
             </AppBar>
             <Drawer anchor="left" open={showSideNav} onClose={() => setShowSideNav(!showSideNav)} classes={{ paper: classes.paper }}>

@@ -36,7 +36,7 @@ function StoreList() {
     if (filteredProducts()) {
         products = [...filteredProducts()]
     }
-    console.log(products)
+
     const classes = withStyles();
     const createCard = (product) => {
         return (

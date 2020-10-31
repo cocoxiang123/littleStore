@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './app.scss';
 import { Switch, Route } from 'react-router-dom'
 import Main from './pages/main'
+import Cart from './pages/Cart'
+import Nav from './component/Nav'
 import Product from './pages/Product/Product'
 import NoMatch from './pages/NoMatch'
 import { FetchProduct } from './api/index'
@@ -21,10 +23,11 @@ function App() {
 
   return (
     <div className="App">
-
+      <Nav />
       <Switch>
         <Route path="/" exact><Main /></Route>
-        <Route path="/:id" exact render={(props) => <Product products={products} />}></Route>
+        <Route path="/product/:id" exact render={(props) => <Product products={products} />}></Route>
+        <Route path="/cart" exact ><Cart /></Route>
         <Route path="*">
           <NoMatch />
         </Route>
