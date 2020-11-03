@@ -1,8 +1,11 @@
 import React from 'react'
-import { Grid, Card, CardContent, Typography, CardActionArea, CardMedia } from '@material-ui/core'
+import { Grid, Card, CardContent, Typography, CardActionArea, CardMedia, Snackbar } from '@material-ui/core'
+import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux';
+import { addItem } from '../redux/actions'
 
 const withStyles = makeStyles(theme => ({
     root: {
@@ -46,10 +49,32 @@ const withStyles = makeStyles(theme => ({
     }
 }))
 
-function ProductCard(props) {
-    const classes = withStyles();
-    const { image: img, title, price, id } = props;
 
+
+function ProductCard({ product, addToCart, cartItem }) {
+    const classes = withStyles();
+    const { image: img, title, price, id } = product;
+    const [open, setOpen] = React.useState(false);
+
+    const onHandleBuy = () => {
+        setOpen(true);
+        const haveItem = cartItem.filter(
+            item => item.id === id)
+
+        if (haveItem.length > 0) {
+            return
+        }
+        else {
+            addToCart(product)
+        }
+
+    }
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
 
     return (
 
@@ -77,11 +102,26 @@ function ProductCard(props) {
 
                 </Link>
 
-                <Button className={classes.button} variant="contained" size="medium" color="primary">Buy</Button>
+                <Button className={classes.button} variant="contained" size="medium" color="primary" onClick={onHandleBuy}>Buy</Button>
+                <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+                    <MuiAlert onClose={handleClose} elevation={6} variant="filled" severity="success">
+                        One item has been added to Cart!
+        </MuiAlert>
+                </Snackbar>
             </Card>
 
         </ Grid>
     )
 }
+const mapStateToProps = state => {
+    return {
+        cartItem: state.cartItem
+    }
+}
+const mapDispatchToProps = (dispatch, ownProps) => {
 
-export default ProductCard
+    return {
+        addToCart: (item) => dispatch(addItem(item))
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ProductCard)

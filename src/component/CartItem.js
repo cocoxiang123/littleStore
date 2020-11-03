@@ -3,6 +3,9 @@ import { Card, Typography, Avatar, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux';
+import { increaseItem, decreaseItem, removeItem } from '../redux/actions'
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -14,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'left'
     },
     avatar: {
+        display: 'flex',
         width: 90,
         height: 90,
         marginRight: 10,
@@ -28,36 +32,73 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    operation: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'space-between'
+    },
+    button: {
+        margin: 3,
+        width: 30
+
     }
+
 }));
 
-function CartItem(props) {
+function CartItem({ cartItem, amount, increaseItem, decreaseItem, removeItem }) {
     const classes = useStyles();
-    const { title, price, img } = props.cartItem
+    const { title, price, image, id } = cartItem
+    const onHandleDecrease = () => {
+        if (amount > 1) {
+            decreaseItem(id)
+        }
+
+    }
 
     return (
         <Card className={classes.card}>
-            <Avatar variant="square" className={classes.avatar} alt="product" title={img}>{img}</Avatar>
+            <Avatar variant="square" className={classes.avatar} alt="product" title={title} src={image} />
             <div className={classes.content}>
-                <Typography variant="h5">{title}</Typography>
-                <Typography variant="body1" color='textSecondary'>{price}</Typography>
+                <Typography variant="body1">{title}</Typography>
+                <Typography variant="body1" color='textSecondary'>${price}</Typography>
             </div>
-            <Button>Remove</Button>
+            <div className={classes.operation}>
+                <Link to={`/product/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <Button variant="outlined" color="primary" size="small" className={classes.button}>Detail</Button>
+                </Link>
+
+                <Button variant="outlined" color="primary" size="small" className={classes.button} onClick={() => removeItem(id)}>Remove</Button>
+            </div>
 
             <div className={classes.amount}>
-                <Button>
+                <Button onClick={() => increaseItem(id)}>
                     <ExpandLessIcon />
                 </Button>
-                1
-                <Button>
+                {amount}
+                <Button onClick={onHandleDecrease} >
                     <ExpandMoreIcon />
                 </Button>
 
             </div>
 
 
-        </Card>
+        </Card >
     )
 }
+const mapStateToProps = (state, ownProps) => {
+    const { amount } = ownProps.cartItem
+    return {
+        amount: amount,
 
-export default CartItem
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        increaseItem: id => dispatch(increaseItem(id)),
+        decreaseItem: id => dispatch(decreaseItem(id)),
+        removeItem: id => dispatch(removeItem(id)),
+
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(CartItem)

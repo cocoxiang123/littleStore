@@ -4,7 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const withStyles = makeStyles({
     noMatch: {
-        margin: 'auto'
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '80vh',
 
     }
 })

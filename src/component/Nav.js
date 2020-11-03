@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { fade, makeStyles, AppBar, Toolbar, IconButton, InputBase, Typography, Drawer, Divider, List } from '@material-ui/core';
+import { fade, makeStyles, AppBar, Toolbar, IconButton, InputBase, Typography, Drawer, Divider, List, Badge } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
@@ -7,11 +7,14 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { Link } from 'react-router-dom'
 import { ProductContext } from '../context'
 import ListItemLink from './ListItemLink'
+import { connect } from 'react-redux';
 
-function Nav() {
+function Nav({ amount }) {
     const useStyles = makeStyles((theme) => ({
         root: {
             flexGrow: 1,
+            height: 60
+
         },
         menuButton: {
             marginRight: theme.spacing(2),
@@ -78,7 +81,7 @@ function Nav() {
     return (
 
         <div className={classes.root}>
-            <AppBar position="static">
+            <AppBar position="fixed">
 
                 <Toolbar>
                     <IconButton onClick={() => setShowSideNav(!showSideNav)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
@@ -106,11 +109,18 @@ function Nav() {
                         />
                     </div>
                     <Link to="/cart" style={{ textDecoration: 'none', color: 'inherit' }}>
-                        <IconButton color="inherit" aria-label="cart">
-
-                            <ShoppingCartIcon />
-
-                        </IconButton>
+                        <Badge
+                            overlap="circle"
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'right',
+                            }}
+                            badgeContent={amount}
+                        >
+                            <IconButton color="inherit" aria-label="cart">
+                                <ShoppingCartIcon />
+                            </IconButton>
+                        </Badge>
                     </Link>
                 </Toolbar>
             </AppBar>
@@ -127,5 +137,9 @@ function Nav() {
         </div >
     )
 }
-
-export default Nav
+const mapStateToProps = (state) => {
+    return {
+        amount: state.amount
+    }
+}
+export default connect(mapStateToProps)(Nav)

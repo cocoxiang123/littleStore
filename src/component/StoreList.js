@@ -38,11 +38,7 @@ function StoreList() {
     }
 
     const classes = withStyles();
-    const createCard = (product) => {
-        return (
-            <ProductCard {...product} key={product.id} />
-        )
-    }
+
     const noMatchSearch = () => {
         return (
             <Grid className={classes.noMatch}>
@@ -59,7 +55,7 @@ function StoreList() {
 
                 {products.length > 0 ? (
                     products.map((product) => {
-                        return createCard(product)
+                        return <ProductCard product={product} key={product.id} />
                     })
                 )
                     :

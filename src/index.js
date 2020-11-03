@@ -5,15 +5,26 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import ProductProvider from './context'
 import { BrowserRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import { reducer } from './redux/reducer'
 
+const init = {
+  cartItem: [],
+  amount: 0,
+  total: 0
+}
+
+const store = createStore(reducer, init)
 
 ReactDOM.render(
-
-  <BrowserRouter>
-    <ProductProvider >
-      <App />
-    </ProductProvider>
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <ProductProvider >
+        <App />
+      </ProductProvider>
+    </BrowserRouter>
+  </Provider>
 
   ,
   document.getElementById('root')

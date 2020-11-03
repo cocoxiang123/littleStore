@@ -1,7 +1,10 @@
-import React from 'react'
-import { Divider, Grid, Typography } from '@material-ui/core'
+import React, { useEffect } from 'react'
+import { Divider, Grid, Typography, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import CartItem from '../component/CartItem'
+import { clearAll, updateTotal } from '../redux/actions'
+import { connect } from 'react-redux';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -13,25 +16,73 @@ const useStyles = makeStyles((theme) => ({
     },
     total: {
         textAlign: 'right',
-        marginRight: 30
+    },
+    summary: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        padding: '1.1rem'
+    },
+    empty: {
+        margin: '1.1rem'
     }
 }));
-const cartItem = { title: 'cup', price: '$2.99', img: 'https://www.ikea.com/au/en/images/products/ikea-365-espresso-cup-and-saucer-white__0711057_PE727932_S5.JPG?f=g' }
-function Cart() {
+
+function Cart({ cart, clearCart, updateTotal, total }) {
     const classes = useStyles();
+    useEffect(() => {
+
+        updateTotal()
+    })
+
+    if (cart.length === 0) {
+        return (
+            <div className={classes.root}>
+                <Grid className={classes.container} >
+                    <Typography variant="h4">Shopping Cart</Typography>
+                    <Typography variant="body1" className={classes.empty}>
+                        is currently empty
+            </Typography>
+
+                </Grid>
+            </div>
+        )
+    }
+
+
     return (
         <div className={classes.root}>
             <Grid className={classes.container} >
                 <Typography variant="h4">Shopping Cart</Typography>
                 <div>
-                    <CartItem cartItem={cartItem} />
-                    <CartItem cartItem={cartItem} />
+                    {cart.map(item => {
+                        return <CartItem cartItem={item} key={item.id} />
+                    })}
+
+
                 </div>
                 <Divider />
-                <Typography variant="subtitle1" className={classes.total}>Total:$0.00</Typography>
+                <div className={classes.summary} >
+                    <Button variant="contained" color="primary" size="small" onClick={() => clearCart()}>Clear Cart</Button>
+                    <Typography variant="subtitle1" className={classes.total}>Total:${total}</Typography>
+                </div>
+
             </Grid>
         </div>
     )
 }
 
-export default Cart
+
+const mapStateToProps = (state) => {
+    return {
+        cart: state.cartItem,
+        total: state.total
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        clearCart: () => dispatch(clearAll()),
+        updateTotal: () => dispatch(updateTotal())
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)

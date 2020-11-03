@@ -14,11 +14,19 @@ function ProductProvider({ children }) {
 
     useEffect(() => {
         const getData = async () => {
-            setProducts(await FetchProduct())
+            setProducts(formatProducts(await FetchProduct()))
         }
         getData();
     }, [])
 
+    const formatProducts = (products) => {
+        return products.map(item => {
+            return {
+                ...item, amount: 1
+            }
+        }
+        )
+    }
     const onChangeSearch = input => {
         setSearch(input)
     }
