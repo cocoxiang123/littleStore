@@ -61,7 +61,7 @@ function CartItem({ cartItem, amount, increaseItem, decreaseItem, removeItem }) 
             <Avatar variant="square" className={classes.avatar} alt="product" title={title} src={image} />
             <div className={classes.content}>
                 <Typography variant="body1">{title}</Typography>
-                <Typography variant="body1" color='textSecondary'>${price}</Typography>
+                <Typography variant="body1" color='textSecondary'>${(price * amount).toFixed(2)}</Typography>
             </div>
             <div className={classes.operation}>
                 <Link to={`/product/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
