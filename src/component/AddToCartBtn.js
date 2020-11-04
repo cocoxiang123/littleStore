@@ -20,11 +20,17 @@ function AddToCartBtn({ addToCart, product, cartItem, content }) {
 
 
     const onHandleBuy = () => {
+
         setOpen(true);
         addToCart(product)
         const haveItem = cartItem.filter(item => item.id === product.id);
         if (haveItem.length > 0) {
-            setMessage("Same item has been added to your cart !")
+            if (haveItem[0].amount >= 99) {
+                setMessage("Item has Reached maximum amount!")
+            }
+            else {
+                setMessage("Same item has been added to your cart !")
+            }
         }
     }
     const handleClose = (event, reason) => {
@@ -45,9 +51,9 @@ function AddToCartBtn({ addToCart, product, cartItem, content }) {
         </>
     )
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
     return {
-        cartItem: state.cartItem
+        cartItem: state.cartItem,
     }
 }
 const mapDispatchToProps = (dispatch, ownProps) => {

@@ -8,7 +8,9 @@ export const reducer = (state, action) => {
             if (haveItem.length > 0) {
                 let tempIncCart = state.cartItem.map(item => {
                     if (item.id === action.payload.cartItem.id) {
-                        item = { ...item, amount: item.amount + 1 }
+                        if (item.amount < 99) {
+                            item = { ...item, amount: item.amount + 1 }
+                        }
                     }
                     return item
                 })
