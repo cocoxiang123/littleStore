@@ -1,11 +1,10 @@
 import React from 'react'
-import { Grid, Card, CardContent, Typography, CardActionArea, CardMedia, Snackbar } from '@material-ui/core'
-import MuiAlert from '@material-ui/lab/Alert';
+import { Grid, Card, CardContent, Typography, CardActionArea, CardMedia } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux';
-import { addItem } from '../redux/actions'
+import AddToCartBtn from './AddToCartBtn';
+
 
 const withStyles = makeStyles(theme => ({
     root: {
@@ -14,6 +13,12 @@ const withStyles = makeStyles(theme => ({
         margin: 50,
         maxWidth: 300,
         maxHeight: 430
+    },
+    card: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItem: "center"
     },
     container: {
         marginBottom: 5
@@ -34,7 +39,15 @@ const withStyles = makeStyles(theme => ({
         maxHeight: 300
     },
     button: {
-        margin: 10
+        width: 100,
+        marginRight: 10
+    },
+    operation: {
+        display: 'flex',
+        margin: 'auto',
+        alignItems: 'center',
+        padding: '1.1rem'
+
     },
     title: {
         maxHeight: 55,
@@ -51,28 +64,17 @@ const withStyles = makeStyles(theme => ({
 
 
 
-function ProductCard({ product, addToCart, cartItem }) {
+function ProductCard({ product }) {
     const classes = withStyles();
     const { image: img, title, price, id } = product;
-    const [open, setOpen] = React.useState(false);
 
-    const onHandleBuy = () => {
-        setOpen(true);
-        addToCart(product)
-    }
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpen(false);
-    };
+
+
 
     return (
 
         <Grid item sm={12} md={6} lg={4} className={classes.root}>
-
-            <Card  >
-
+            <Card className={classes.card}>
                 <CardActionArea className={classes.container}>
                     <Link to={`product/${id}`} className={classes.link}>
                         <CardContent className={classes.content}>
@@ -87,32 +89,16 @@ function ProductCard({ product, addToCart, cartItem }) {
                         </CardContent>
                     </Link>
                 </CardActionArea>
-
-                <Link to={`/product/${id}`} className={classes.link}>
-                    <Button className={classes.button} variant="contained" size="medium" color="primary">Detail</Button>
-
-                </Link>
-
-                <Button className={classes.button} variant="contained" size="medium" color="primary" onClick={onHandleBuy}>Buy</Button>
-                <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-                    <MuiAlert onClose={handleClose} elevation={6} variant="filled" severity="success">
-                        One item has been added to Cart!
-        </MuiAlert>
-                </Snackbar>
+                <div className={classes.operation}>
+                    <Link to={`/product/${id}`} className={classes.link}>
+                        <Button className={classes.button} variant="contained" size="medium" color="primary">Detail</Button>
+                    </Link>
+                    <AddToCartBtn className={classes.button} product={product} content="Buy" />
+                </div>
             </Card>
 
         </ Grid>
     )
 }
-const mapStateToProps = state => {
-    return {
-        cartItem: state.cartItem
-    }
-}
-const mapDispatchToProps = (dispatch, ownProps) => {
 
-    return {
-        addToCart: (item) => dispatch(addItem(item))
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(ProductCard)
+export default ProductCard

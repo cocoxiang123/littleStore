@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { ProductContext } from '../../context'
-
 import NoMatch from '../NoMatch'
 import './product.css'
 import { useParams } from 'react-router-dom'
@@ -9,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { addItem } from '../../redux/actions'
+import AddToCartBtn from '../../component/AddToCartBtn'
 
 
 
@@ -71,7 +71,7 @@ function Product({ addToCart }) {
     const slug = useParams().id;
     const productDetail = products.filter(product => product.id.toString() === slug);
     const classes = withStyles();
-    console.log(productDetail)
+
     const productImg = document.querySelectorAll(".product_img")[0];
 
     const onImgMouseMove = (e) => {
@@ -109,14 +109,14 @@ function Product({ addToCart }) {
                         </div>
                         <div className={classes.addCart}>
                             <Typography variant="subtitle2" color="textSecondary" className={classes.ID}>ID:{productDetail[0].id}</Typography>
-                            <Button mt={6} variant="outlined" size="medium" color="primary" className={classes.btnAddCart} onClick={() => addToCart(productDetail[0])}>Add to Cart</Button>
+                            <AddToCartBtn product={productDetail[0]} content="Add to Cart" />
                         </div>
                         <Typography variant="body2" className={classes.description}>Description: {productDetail[0].description}</Typography>
                         <Typography variant="body1" component="p" className={classes.price} color="textSecondary">
                             {`Price: $${productDetail[0].price}`}
                         </Typography>
                         <Link to={`/`} className={classes.link}>
-                            <Button mt={6} variant="contained" size="medium" color="primary" >Back to Home</Button>
+                            <Button mt={8} variant="contained" size="medium" color="primary" >Back to Home</Button>
                         </Link>
 
 
