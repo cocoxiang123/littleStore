@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { FetchProduct } from './api/index'
+import { data } from './mock'
 import { useHistory } from "react-router-dom";
 
 export const ProductContext = React.createContext();
@@ -13,10 +14,11 @@ function ProductProvider({ children }) {
 
 
     useEffect(() => {
-        const getData = async () => {
+        setProducts(formatProducts(data))
+        /* const getData = async () => {
             setProducts(formatProducts(await FetchProduct()))
         }
-        getData();
+        getData(); */
     }, [])
 
     const formatProducts = (products) => {

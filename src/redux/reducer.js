@@ -1,4 +1,4 @@
-import { Add_Item, ClearCart, Increase_Item, Decrease_Item, Remove_Item, Update_Total } from './actionTypes'
+import { Add_Item, ClearCart, Remove_Item, Update_Total, Update_Amount } from './actionTypes'
 
 export const reducer = (state, action) => {
     switch (action.type) {
@@ -24,23 +24,21 @@ export const reducer = (state, action) => {
         case ClearCart:
             return { ...state, cartItem: action.payload.cartItem, amount: 0, total: 0 }
 
-        case Increase_Item:
-            let tempIncCart = state.cartItem.map(item => {
+        case Update_Amount:
+            let tempUpdatCart = state.cartItem.map(item => {
                 if (item.id === action.payload.id) {
-                    item = { ...item, amount: item.amount + 1 }
+                    if (action.payload.option === 'inc')
+                        item = { ...item, amount: item.amount + 1 }
+                    if (action.payload.option === 'desc')
+                        item = { ...item, amount: item.amount - 1 }
+                    if (action.payload.option === 'update')
+                        item = { ...item, amount: action.payload.amount }
                 }
                 return item
             })
-            return { ...state, cartItem: tempIncCart }
+            return { ...state, cartItem: tempUpdatCart }
 
-        case Decrease_Item:
-            let tempDecCart = state.cartItem.map(item => {
-                if (item.id === action.payload.id) {
-                    item = { ...item, amount: item.amount - 1 }
-                }
-                return item
-            })
-            return { ...state, cartItem: tempDecCart }
+
 
         case Remove_Item:
             return { ...state, cartItem: state.cartItem.filter(item => item.id !== action.payload.id), amount: state.amount - 1 }

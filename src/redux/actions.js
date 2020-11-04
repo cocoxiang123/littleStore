@@ -1,4 +1,4 @@
-import { Add_Item, ClearCart, Increase_Item, Decrease_Item, Remove_Item, Update_Total } from './actionTypes'
+import { Add_Item, ClearCart, Remove_Item, Update_Total, Update_Amount } from './actionTypes'
 
 export const addItem = (cartItem) => ({
     type: Add_Item,
@@ -12,16 +12,11 @@ export const clearAll = () => ({
         cartItem: []
     }
 })
-export const increaseItem = id => ({
-    type: Increase_Item,
+
+export const updateAmount = (id, option, amount) => ({
+    type: Update_Amount,
     payload: {
-        id
-    }
-})
-export const decreaseItem = id => ({
-    type: Decrease_Item,
-    payload: {
-        id
+        id, option, amount
     }
 })
 
