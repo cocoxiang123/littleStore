@@ -58,16 +58,7 @@ function ProductCard({ product, addToCart, cartItem }) {
 
     const onHandleBuy = () => {
         setOpen(true);
-        const haveItem = cartItem.filter(
-            item => item.id === id)
-
-        if (haveItem.length > 0) {
-            return
-        }
-        else {
-            addToCart(product)
-        }
-
+        addToCart(product)
     }
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -103,7 +94,7 @@ function ProductCard({ product, addToCart, cartItem }) {
                 </Link>
 
                 <Button className={classes.button} variant="contained" size="medium" color="primary" onClick={onHandleBuy}>Buy</Button>
-                <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+                <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
                     <MuiAlert onClose={handleClose} elevation={6} variant="filled" severity="success">
                         One item has been added to Cart!
         </MuiAlert>

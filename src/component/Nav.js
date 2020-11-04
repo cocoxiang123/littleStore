@@ -11,9 +11,10 @@ import { connect } from 'react-redux';
 
 function Nav({ amount }) {
     const useStyles = makeStyles((theme) => ({
+
         root: {
             flexGrow: 1,
-            height: 60
+            height: 60,
 
         },
         menuButton: {
@@ -22,6 +23,9 @@ function Nav({ amount }) {
         title: {
             flexGrow: 1,
             fontSize: '1.2rem',
+            [theme.breakpoints.down('sm')]: {
+                fontSize: '1rem',
+            },
 
         },
         link: {
@@ -87,7 +91,7 @@ function Nav({ amount }) {
                     <IconButton onClick={() => setShowSideNav(!showSideNav)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h5" className={classes.title}>
+                    <Typography variant="h5" className={classes.title} >
                         <Link to="/" className={classes.link} onClick={onClearSearch}>
                             Little Store</Link>
                     </Typography>

@@ -7,16 +7,22 @@ import { useParams } from 'react-router-dom'
 import { Typography, Button, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { addItem } from '../../redux/actions'
 
 
 
-const withStyles = makeStyles({
+const withStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
         justifyContent: 'center',
         alignContent: 'center',
         minHeight: '100vh',
-        padding: '0.8rem'
+        padding: '0.8rem',
+        [theme.breakpoints.down('sm')]: {
+            padding: '2rem',
+        },
+
     },
     root: {
         width: 450,
@@ -38,6 +44,13 @@ const withStyles = makeStyles({
     ID: {
         fontSize: '1.03rem'
     },
+    addCart: {
+        display: 'flex',
+        justifyContent: 'space-between'
+    },
+    btnAddCart: {
+        marginRight: 5
+    },
     description: {
         marginTop: '0.8rem',
         fontSize: '1.05rem'
@@ -50,15 +63,15 @@ const withStyles = makeStyles({
     category: {
         textTransform: 'uppercase'
     }
-}
+})
 )
-function Product(props) {
+function Product({ addToCart }) {
     const store = useContext(ProductContext);
     const { products } = store;
     const slug = useParams().id;
     const productDetail = products.filter(product => product.id.toString() === slug);
     const classes = withStyles();
-
+    console.log(productDetail)
     const productImg = document.querySelectorAll(".product_img")[0];
 
     const onImgMouseMove = (e) => {
@@ -94,15 +107,22 @@ function Product(props) {
                                 id="product_img"
                             />
                         </div>
-                        <Typography variant="subtitle2" color="textSecondary" className={classes.ID}>ID:{productDetail[0].id}</Typography>
+                        <div className={classes.addCart}>
+                            <Typography variant="subtitle2" color="textSecondary" className={classes.ID}>ID:{productDetail[0].id}</Typography>
+                            <Button mt={6} variant="outlined" size="medium" color="primary" className={classes.btnAddCart} onClick={() => addToCart(productDetail[0])}>Add to Cart</Button>
+                        </div>
                         <Typography variant="body2" className={classes.description}>Description: {productDetail[0].description}</Typography>
-                        <Typography variant="body1" component="p" className={classes.price}>
+                        <Typography variant="body1" component="p" className={classes.price} color="textSecondary">
                             {`Price: $${productDetail[0].price}`}
                         </Typography>
                         <Link to={`/`} className={classes.link}>
                             <Button mt={6} variant="contained" size="medium" color="primary" >Back to Home</Button>
                         </Link>
+
+
+
                     </div>
+
 
                     : <NoMatch className={classes.loading} />
 
@@ -112,5 +132,10 @@ function Product(props) {
         </>
     )
 }
+const mapDispatchToProps = (dispatch) => {
 
-export default Product
+    return {
+        addToCart: (item) => dispatch(addItem(item))
+    }
+}
+export default connect(null, mapDispatchToProps)(Product)

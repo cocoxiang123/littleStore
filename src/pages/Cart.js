@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
-import { Divider, Grid, Typography, Button } from '@material-ui/core'
+import React, { useEffect, useState } from 'react'
+import { Divider, Grid, Typography, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
+import DeleteIcon from '@material-ui/icons/Delete';
 import CartItem from '../component/CartItem'
 import { clearAll, updateTotal } from '../redux/actions'
 import { connect } from 'react-redux';
@@ -29,10 +30,19 @@ const useStyles = makeStyles((theme) => ({
 
 function Cart({ cart, clearCart, updateTotal, total }) {
     const classes = useStyles();
+    const [dialogOpen, setDialogOpen] = useState(false)
     useEffect(() => {
 
         updateTotal()
     })
+    const handleDialogOpen = () => {
+        setDialogOpen(true);
+    };
+
+    const handleDialogClose = () => {
+        setDialogOpen(false);
+    };
+
 
     if (cart.length === 0) {
         return (
@@ -62,9 +72,33 @@ function Cart({ cart, clearCart, updateTotal, total }) {
                 </div>
                 <Divider />
                 <div className={classes.summary} >
-                    <Button variant="contained" color="primary" size="small" onClick={() => clearCart()}>Clear Cart</Button>
+                    <div>
+                        <Button variant="outlined" color="primary" size="small" onClick={handleDialogOpen}><DeleteIcon />Clear Cart</Button>
+                        <Dialog
+                            open={dialogOpen}
+                            onClose={handleDialogOpen}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">{"Remove all cart items?"}</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    Are you sure to remove all cart items?
+          </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleDialogClose} color="primary">
+                                    Cancel
+          </Button>
+                                <Button onClick={() => clearCart()} color="primary" autoFocus>
+                                    Confirm
+          </Button>
+                            </DialogActions>
+                        </Dialog>
+                    </div>
                     <Typography variant="subtitle1" className={classes.total}>Total:${total}</Typography>
                 </div>
+                <Button variant="contained" color="primary" fullWidth>Process to Checkout</Button>
 
             </Grid>
         </div>

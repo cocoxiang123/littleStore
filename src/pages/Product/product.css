@@ -17,3 +17,9 @@
     object-fit: cover;
     transform-origin: center center;
   }
+
+  @media screen and (max-width:550px){
+    .img_container {
+      width:250px;
+    }
+  }

@@ -1,4 +1,4 @@
-Main & Product:
+*Main & Product:
 1.SetUp file Structure & Routing
 *React-router-dom
 ------------
@@ -14,8 +14,14 @@ Main & Product:
 5. Setting up search bar
 *Jquery autoComplete
 
-Pages:
+*Pages:
 Main 
 product
 Cart
 Payment
+
+*Redux
+-Create Store: cartItem,total,amount
+-Reducer
+-actions
+-connect and dispatch
