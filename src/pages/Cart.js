@@ -5,6 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import CartItem from '../component/CartItem'
 import { clearAll, updateTotal } from '../redux/actions'
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -98,7 +99,11 @@ function Cart({ cart, clearCart, updateTotal, total }) {
                     </div>
                     <Typography variant="subtitle1" className={classes.total}>Total:${total}</Typography>
                 </div>
-                <Button variant="contained" color="primary" fullWidth>Process to Checkout</Button>
+                <Button variant="contained" color="primary" fullWidth>
+                    <Link to="/checkout" style={{ textDecoration: 'none', color: 'inherit' }}>
+                        Process to Checkout
+                    </Link>
+                </Button>
 
             </Grid>
         </div>
