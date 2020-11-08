@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useReducer, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -51,30 +51,49 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
-function getStepContent(step) {
-    switch (step) {
-        case 0:
-            return <AddressForm />;
-        case 1:
-            return <PaymentForm />;
-        case 2:
-            return <Review />;
-        default:
-            throw new Error('Unknown step');
-    }
-}
+
 
 export default function Checkout() {
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
+    const [check, setCheck] = useState(true)
+    const [inputValues, setInputValues] = useReducer(
+        (state, newState) => ({ ...state, ...newState }),
+        { firstName: '', lastName: '', address1: '', address2: '', city: '', zip: '', country: '', saveAddress: (false), cardName: '', cardNumber: '', expDate: '', CVV: '', saveCard: false }
+    );
+
+    const OnHandleChange = event => {
+
+        const { name, value, checked } = event.target;
+        if (event.target.type === 'checkbox') {
+            console.log(Boolean(!value))
+            setInputValues({ [name]: !Boolean(value) });
+        }
+        setInputValues({ [name]: value });
+
+    };
 
     const handleNext = () => {
+
         setActiveStep(activeStep + 1);
     };
 
     const handleBack = () => {
         setActiveStep(activeStep - 1);
     };
+
+    function getStepContent(step) {
+        switch (step) {
+            case 0:
+                return <AddressForm check={check} OnHandleChange={OnHandleChange} inputValues={inputValues} />;
+            case 1:
+                return <PaymentForm check={check} OnHandleChange={OnHandleChange} inputValues={inputValues} />;
+            case 2:
+                return <Review inputValues={inputValues} />;
+            default:
+                throw new Error('Unknown step');
+        }
+    }
 
     return (
         <React.Fragment>

@@ -5,21 +5,12 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
+import { connect } from 'react-redux';
 
-const products = [
-    { name: 'Product 1', desc: 'A nice thing', price: '$9.99' },
-    { name: 'Product 2', desc: 'Another thing', price: '$3.45' },
-    { name: 'Product 3', desc: 'Something else', price: '$6.51' },
-    { name: 'Product 4', desc: 'Best thing of all', price: '$14.11' },
-    { name: 'Shipping', desc: '', price: 'Free' },
-];
-const addresses = ['1 Material-UI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-const payments = [
-    { name: 'Card type', detail: 'Visa' },
-    { name: 'Card holder', detail: 'Mr John Smith' },
-    { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-    { name: 'Expiry date', detail: '04/2024' },
-];
+
+
+
+
 
 const useStyles = makeStyles((theme) => ({
     listItem: {
@@ -33,9 +24,25 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Review() {
+function Review({ inputValues, cart }) {
     const classes = useStyles();
+    const { address1, address2, city, zip, country, firstName, lastName, cardName, cardNumber, expDate, CVV } = inputValues;
+    const addresses = [address1, address2, city, zip, country];
+    const payments = [
+        { name: 'Card type', detail: 'Visa' },
+        { name: 'Card holder', detail: cardName },
+        { name: 'Card number', detail: cardNumber },
+        { name: 'Expiry date', detail: expDate },
+    ];
+    const products = cart.map(cart => {
+        return {
+            name: cart.title,
+            amount: cart.amount,
+            price: cart.amount * cart.price,
 
+        }
+    })
+    const total = cart.reduce(((acc, cur) => acc + cur.price * cur.amount), 0)
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
@@ -44,15 +51,15 @@ export default function Review() {
             <List disablePadding>
                 {products.map((product) => (
                     <ListItem className={classes.listItem} key={product.name}>
-                        <ListItemText primary={product.name} secondary={product.desc} />
-                        <Typography variant="body2">{product.price}</Typography>
+                        <ListItemText primary={product.name} secondary={`X ${product.amount}`} />
+                        <Typography variant="body2">${product.price}</Typography>
                     </ListItem>
                 ))}
                 <ListItem className={classes.listItem}>
                     <ListItemText primary="Total" />
                     <Typography variant="subtitle1" className={classes.total}>
-                        $34.06
-          </Typography>
+                        {total === 0 ? '$0.00' : `$ ${total}`}
+                    </Typography>
                 </ListItem>
             </List>
             <Grid container spacing={2}>
@@ -60,7 +67,7 @@ export default function Review() {
                     <Typography variant="h6" gutterBottom className={classes.title}>
                         Shipping
           </Typography>
-                    <Typography gutterBottom>John Smith</Typography>
+                    <Typography gutterBottom>{firstName + ' ' + lastName}</Typography>
                     <Typography gutterBottom>{addresses.join(', ')}</Typography>
                 </Grid>
                 <Grid item container direction="column" xs={12} sm={6}>
@@ -84,3 +91,7 @@ export default function Review() {
         </React.Fragment>
     );
 }
+const mapStateToProps = state => {
+    return { cart: state.cartItem }
+}
+export default connect(mapStateToProps)(Review);

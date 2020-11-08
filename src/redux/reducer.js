@@ -1,4 +1,4 @@
-import { Add_Item, ClearCart, Remove_Item, Update_Total, Update_Amount } from './actionTypes'
+import { Add_Item, ClearCart, Remove_Item, Update_Total, Update_Amount, Update_Address } from './actionTypes'
 
 export const reducer = (state, action) => {
     switch (action.type) {
@@ -47,6 +47,8 @@ export const reducer = (state, action) => {
         case Update_Total:
             const tempTotal = state.cartItem.reduce((acc, item) => (acc + parseFloat(item.price) * item.amount), 0).toFixed(2)
             return { ...state, total: tempTotal }
+        case Update_Address:
+            return { ...state, address: action.payload.address }
         default:
             return state
     }

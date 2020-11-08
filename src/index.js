@@ -12,7 +12,8 @@ import { reducer } from './redux/reducer'
 const init = {
   cartItem: [],
   amount: 0,
-  total: 0
+  total: 0,
+  address: {}
 }
 
 const store = createStore(reducer, init)
