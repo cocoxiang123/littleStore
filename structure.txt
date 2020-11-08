@@ -25,3 +25,8 @@ Payment
 -Reducer
 -actions
 -connect and dispatch
+
+*Payment
+template from material-ui
+connect redux store 
+add coupon before payment
